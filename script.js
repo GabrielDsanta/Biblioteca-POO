@@ -80,6 +80,15 @@ function MakeBook(){
 
     Livros.push(NewBook)
 
+    Livros.forEach(Validator)
+
+    function Validator(item){
+        if(item.Titulo == "" || item.Disponibilidade == ""){
+            Livros.pop(NewBook)
+            return alert("Não foi possível cadastrar o livro")
+        }
+    }
+
 }
 
 function MakeBiblioteca(){
@@ -97,13 +106,25 @@ function MakeBiblioteca(){
         break;
         
         case "2":
-        let nome = prompt("Qual o nome do livro ?")        
-        Bibliotecas[0].FindBook(nome)    
+        if(Livros.length == 0){
+            return alert ("Você ainda não cadastrou nenhum livro")
+        }
+
+        else{
+            let nome = prompt("Qual o nome do livro ?")        
+            Bibliotecas[0].FindBook(nome)    
+        }
         break;
 
         case "3":
-        let bookName = prompt("Qual o nome do livro ?")        
-        Bibliotecas[0].BorrowBook(bookName)    
+        if(Livros.length == 0){
+            return alert ("Você ainda não cadastrou nenhum livro")
+        }
+
+        else{
+            let bookName = prompt("Qual o nome do livro ?")        
+            Bibliotecas[0].BorrowBook(bookName)    
+        }
         break;
 
         default:
