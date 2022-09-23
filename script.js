@@ -49,6 +49,7 @@ class Biblioteca{
             if(item.Titulo == nome){
                 if(item.Disponibilidade == true){
                     item.Disponibilidade = false
+                    Bibliotecas[0].Emprestimos.push(nome)
                     return alert("Livro emprestado com sucesso")
                 }
 
@@ -62,10 +63,11 @@ class Biblioteca{
     GiveBackBook(nome){
         Livros.forEach(VerificateBook)
 
-        function VerificateBook(item){
+        function VerificateBook(item, index){
             if(item.Titulo == nome){
                 if(item.Disponibilidade == false){
                     item.Disponibilidade = true
+                    Bibliotecas[0].Emprestimos.splice(index, 1)
                     return alert("Livro devolvido com sucesso")
                 }
 
@@ -76,8 +78,21 @@ class Biblioteca{
         }
     }
 
-    AddBookOnAcervoDeLivros(){
+    AddBookOnAcervoDeLivros(nome){
+        Livros.forEach(ProcurarBook)
 
+        function ProcurarBook(item){
+            if(item.Titulo == nome){
+                if(item.Disponibilidade == true){
+                    Bibliotecas[0].AcervoDeLivros.push(nome)
+                    return alert("Livro adicionado com sucesso a sua coleção")
+                }
+
+                else{
+                    return alert(`O Livro ${item.Titulo} não foi encontrado`)
+                }
+            }
+        }
     }
 }
 
@@ -142,14 +157,21 @@ while(choice){
         break;
     }
 }
-function MakeBook(){
-    let NewBook = new Livro()
 
-    NewBook.Titulo = prompt("Qual o nome do Livro ?")
-    NewBook.Autor = prompt("Qual o autor do Livro ?")
-    NewBook.Editora = prompt("Qual a Editora do Livro ?")
-    NewBook.AnoPub = prompt("Qual o Ano do Livro ?")
-    NewBook.Disponibilidade = prompt("Qual a disponibilidade do Livro ? /// 1 para Disponível /// 2 para Indisponível")
+function MakeBook(){
+
+   let tituloParametro = prompt("Qual o nome do Livro ?")
+   let autorParametro = prompt("Qual o autor do Livro ?")
+   let editoraParametro = prompt("Qual a Editora do Livro ?")
+   let anoParametro = prompt("Qual o Ano do Livro ?")
+
+   if(tituloParametro == ""){    
+        return alert("Não foi possível cadastrar o livro")
+    }
+
+   let NewBook = new Livro(tituloParametro, autorParametro, editoraParametro, anoParametro)
+
+   NewBook.Disponibilidade = prompt("Qual a disponibilidade do Livro ? /// 1 para Disponível /// 2 para Indisponível")
     if(NewBook.Disponibilidade == "1"){
         NewBook.Disponibilidade = true
     }
@@ -158,21 +180,16 @@ function MakeBook(){
         NewBook.Disponibilidade = false
     }
 
-    Livros.push(NewBook)
-
-    Livros.forEach(Validator)
-
-    function Validator(item){
-        if(item.Titulo == "" || item.Disponibilidade == ""){
-            Livros.pop(NewBook)
-            return alert("Não foi possível cadastrar o livro")
-        }
+    else{
+        return alert("Opção inválida")
     }
+
+    Livros.push(NewBook)
 
 }
 
 function MakeBiblioteca(){
-    let opcao = prompt("1 Criar Biblioteca /// 2 Procurar livro /// 3 Emprestimo De Livro /// 4 Devolver Livro")
+    let opcao = prompt("1 Criar Biblioteca /// 2 Procurar livro /// 3 Emprestimo De Livro /// 4 Devolver Livro /// 5 Adicionar Na Coleção De Livros")
     switch(opcao){
 
         case "1":
@@ -217,6 +234,19 @@ function MakeBiblioteca(){
             Bibliotecas[0].GiveBackBook(bookNameParametro)    
         }
         break;
+
+        case "5":
+        if(Livros.length == 0){
+            return alert ("Você ainda não cadastrou nenhum livro")
+        }
+
+        else{
+            let addBookParametro = prompt("Qual o nome do livro ?")
+            Bibliotecas[0].AddBookOnAcervoDeLivros(addBookParametro)
+        }
+        break;
+
+
         default:
         alert("Opção Inválida")
         break;
