@@ -10,12 +10,27 @@ class Livro{
     Editora
     AnoPub
     Disponibilidade
+
+    constructor(titulo, autor, editora, anoPub){
+        this.Titulo = titulo
+        this.Autor = autor
+        this.Editora = editora
+        this.AnoPub = anoPub
+    }
 }
 
 class Biblioteca{
     Nome
     Endereco
     Telefone
+    AcervoDeLivros = []
+    Emprestimos = []
+
+    constructor(nome, endereco, telefone){
+        this.Nome = nome
+        this.Endereco = endereco
+        this.Telefone = telefone
+    }
 
     FindBook(nome){
         Livros.forEach(Verificate)
@@ -60,7 +75,55 @@ class Biblioteca{
             }
         }
     }
+
+    AddBookOnAcervoDeLivros(){
+
+    }
 }
+
+class User{
+    Nome
+
+    constructor(nome){
+        this.Nome = nome
+    }
+}
+
+class Client extends User{
+    Curso
+    AnoInicio
+    AnoTermino
+
+    constructor(nome,curso, anoInicio, anoTermino){
+        super(nome)
+        this.Curso = curso
+        this.AnoInicio = anoInicio
+        this.AnoTermino = anoTermino
+    }
+}
+
+class Funcionario extends User{
+    Senha
+
+    constructor(nome, senha){
+        super(nome)
+        this.Senha = senha
+    }
+    
+}
+
+class Emprestimo extends User{
+    Livro
+    Usuario
+
+    constructor(nomeLivro, usuario){
+        super(usuario)
+        this.Livro = nomeLivro
+    }
+}
+
+
+
 
 while(choice){
     choice = prompt("1 Cadastrar Livro /// 2 Acessar Biblioteca")
