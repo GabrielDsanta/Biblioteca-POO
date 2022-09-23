@@ -43,6 +43,23 @@ class Biblioteca{
             }
         }
     }
+
+    GiveBackBook(nome){
+        Livros.forEach(VerificateBook)
+
+        function VerificateBook(item){
+            if(item.Titulo == nome){
+                if(item.Disponibilidade == false){
+                    item.Disponibilidade = true
+                    return alert("Livro devolvido com sucesso")
+                }
+
+                else{
+                    return alert(`O Livro ${item.Titulo} não foi emprestado pra ser devolvido`)
+                }
+            }
+        }
+    }
 }
 
 while(choice){
@@ -92,7 +109,7 @@ function MakeBook(){
 }
 
 function MakeBiblioteca(){
-    let opcao = prompt("1 Criar Biblioteca /// 2 Procurar livro /// 3 Emprestimo De Livro")
+    let opcao = prompt("1 Criar Biblioteca /// 2 Procurar livro /// 3 Emprestimo De Livro /// 4 Devolver Livro")
     switch(opcao){
 
         case "1":
@@ -127,6 +144,16 @@ function MakeBiblioteca(){
         }
         break;
 
+        case "4":
+        if(Livros.length == 0){
+            return alert ("Você ainda não cadastrou nenhum livro")
+        }
+
+        else{
+            let bookNameParametro = prompt("Qual o nome do livro ?")        
+            Bibliotecas[0].GiveBackBook(bookNameParametro)    
+        }
+        break;
         default:
         alert("Opção Inválida")
         break;
